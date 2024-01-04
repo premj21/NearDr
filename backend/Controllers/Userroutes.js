@@ -40,17 +40,17 @@ const register = async (req, res) => {
       OTP: generateOTP(),
     });
     await user.save();
-    // const token = user.gentoken();
+    const token = user.gentoken();
     res
       .status(201)
-      //   .cookie("token", token, {
-      //     expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-      //   })
+      .cookie("token", token, {
+        expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+      })
       .json({
         success: true,
         message: "Registered Successfully",
         user: user,
-        // token: token,
+        token: token,
       });
   } catch (error) {
     res.status(501).json({ success: false, message: error });
@@ -76,11 +76,13 @@ const login = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Inalid Credential" });
 
-    // const token = user.gentoken();
-    res
-      .status(200)
-      // .cookie("token", token)
-      .json({ success: true, message: "Login Succesfull", user: user });
+    const token = user.gentoken();
+    res.status(200).cookie("token", token).json({
+      success: true,
+      message: "Login Succesfull",
+      user: user,
+      token: token,
+    });
   } catch (error) {
     res.status(501).json({ success: false, message: error });
   }
@@ -117,11 +119,12 @@ const logout = (req, res) => {
   try {
     res
       .status(200)
-      // .cookie("token", null, { expires: new Date(Date.now()), httpOnly: true })
+      .cookie("token", null, { expires: new Date(Date.now()), httpOnly: true })
       .json({
         message: "Logout Successfully",
       });
   } catch (error) {
+    console.log("error", error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -171,31 +174,27 @@ const Passwordchange = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-// const updateprofile = async(req,res) =>{
-//   try {
-//      let user = await User.findById(req.user._id);
-//      if(req.body.name) user.name = req.body.name;
-//      if(req.body.email) user.email = req.body.email;
-//      if(req.body.avatar){
-//       await cloudinary.v2.uploader.destroy(user.avatar.public_id);
-//       const mycloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-//         folder: "post",
-//       });
-
-//       user.avatar.public_id = mycloud.public_id
-//       user.avatar.url = mycloud.secure_url
-//      }
-//      await  user.save();
-//      res.status(200).json({
-//         success:true,
-//         message:"Profile Updated "
-//      })
-
-//   } catch (error) {
-//     res.status(500).json({success:false,message:error.message})
-
-//   }
-// }
+const updateprofile = async (req, res) => {
+  try {
+    let user = await User.findById(req.user._id);
+    if (req.body.name) user.name = req.body.name;
+    // if (req.body.avatar) {
+    //   await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+    //   const mycloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    //     folder: "post",
+    //   });
+    //   user.avatar.public_id = mycloud.public_id;
+    //   user.avatar.url = mycloud.secure_url;
+    // }
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "Profile Updated ",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 // const deleteaccount = async(req,res)=>{
 //    try {
 //     const  user =await User.findById(req.user._id);
@@ -348,7 +347,7 @@ module.exports = {
   //   followUser,
   logout,
   Passwordchange,
-  //   updateprofile,
+  updateprofile,
   //   deleteaccount,
   //   myprofile,
   //   getuserprofile,

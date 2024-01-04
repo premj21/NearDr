@@ -8,22 +8,22 @@ const {
   //   resetpass,
   //   getMyPosts,
   logout,
-  //   Passwordchange,
-  //   updateprofile,
+  Passwordchange,
+  updateprofile,
   //   deleteaccount,
   //   myprofile,
   //   getuserprofile,
   //   getallUser,
 } = require("../Controllers/Userroutes");
-// const authentication = require("../middlewares/authentication");
+const authentication = require("../middlewares/authentication");
 const router = express.Router();
 router.route("/register").post(register);
 router.route("/login").post(login);
 // router.route("/alluser").get(allUser);
 // router.route("/follow/:id").get(authentication, followUser);
 router.route("/logout").get(logout);
-// router.route("/update/password").put(authentication, Passwordchange);
-// router.route("/update/profile").put(authentication, updateprofile);
+router.route("/update/password").put(authentication, Passwordchange);
+router.route("/update/profile").put(authentication, updateprofile);
 // router.route("/delete/me").delete(authentication, deleteaccount);
 // router.route("/me").get(authentication, myprofile);
 // router.route("/my/posts").get(authentication, getMyPosts);
