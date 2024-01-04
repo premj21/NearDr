@@ -1,6 +1,6 @@
 Installation Process . . . . .
 
-cd backend \n
+cd backend 
 
-npm i \n
-nodemon server.js / node server.js \n
+npm i 
+nodemon server.js / node server.js 
