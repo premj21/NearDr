@@ -8,13 +8,6 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter your name."],
     },
-    email: {
-      type: String,
-      required: [true, "Please enter your email."],
-      unique: true,
-      lowercase: true,
-      trim: true,
-    },
     phoneNumber: {
       type: String,
       required: [true, "Please enter your phone number."],
@@ -34,6 +27,10 @@ const UserSchema = new mongoose.Schema(
     avatar: {
       public_id: String,
       url: String,
+    },
+    role: {
+      type: String,
+      default: "patient ", // Default value set to "patient "
     },
     tokenOfChangePassword: {
       type: String,
@@ -55,6 +52,10 @@ UserSchema.pre("save", async function (next) {
   }
   next();
 });
+
+UserSchema.methods.matchpass = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 UserSchema.methods.gentoken = function () {
   return jwt.sign({ _id: this._id }, process.env.SEC);

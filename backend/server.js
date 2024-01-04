@@ -4,7 +4,6 @@ const dbconnect = require("./config/dbconnect");
 require("dotenv").config({ path: "./config/config.env" });
 const cookieparser = require("cookie-parser");
 const User = require("./routes/User");
-// const Post = require('./routes/Post');
 const cloudinary = require("cloudinary");
 
 cloudinary.config({

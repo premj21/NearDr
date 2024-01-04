@@ -12,13 +12,18 @@ const cloudinary = require("cloudinary");
 //         console.log(error);
 //     }
 // }
+
+// const otpsend = async (req,res)=>{
+//   //  send otp to number =>
+//   let user =
+// }
 const register = async (req, res) => {
   try {
     // const mycloud = await cloudinary.v2.uploader.upload(req.body.image, {
     //   folder: "post",
     // });
-    const { name, email, password, phoneNumber } = req.body;
-    let user = await User.findOne({ email });
+    const { name, password, phoneNumber } = req.body;
+    let user = await User.findOne({ phoneNumber });
     if (user) {
       return res
         .status(400)
@@ -26,7 +31,6 @@ const register = async (req, res) => {
     }
     user = await User.create({
       name,
-      email,
       password,
       avatar: {
         public_id: "hel",
@@ -57,19 +61,30 @@ function generateOTP() {
   return Math.floor(1000 + Math.random() * 9000); // Generates a random 4-digit number
 }
 
-// const login = async(req,res)=>{
-//     try {
-//        const {email,password} = req.body;
-//      let user = await User.findOne({email}).select("+password");
-//      if(!user) return res.status(401).json({success:false,message:"User Not Found"});
-//      let pasmatch = await user.matchpass(password);
-//      if(!pasmatch) return res.status(401).json({success:false,message:"Inalid Credential"});
-//      const token = user.gentoken();
-//      res.status(200).cookie('token',token).json({success:true,message:"Login Succesfull",user:user})
-//    } catch (error) {
-//         res.status(501).json({success:false,message:error});
-//    }
-// }
+const login = async (req, res) => {
+  try {
+    const { phoneNumber, password } = req.body;
+    let user = await User.findOne({ phoneNumber }).select("+password");
+    if (!user)
+      return res
+        .status(401)
+        .json({ success: false, message: "User Not Found" });
+
+    let pasmatch = await user.matchpass(password);
+    if (!pasmatch)
+      return res
+        .status(401)
+        .json({ success: false, message: "Inalid Credential" });
+
+    // const token = user.gentoken();
+    res
+      .status(200)
+      // .cookie("token", token)
+      .json({ success: true, message: "Login Succesfull", user: user });
+  } catch (error) {
+    res.status(501).json({ success: false, message: error });
+  }
+};
 // const followUser= async(req,res)=>{
 //     try {
 //      const user = await User.findById(req.params.id);
@@ -98,18 +113,18 @@ function generateOTP() {
 //     res.status(500).json({success:false,message:error.message})
 //     }
 // }
-// const logout =(req,res)=>{
-//     try {
-//         res.status(200).cookie('token',null,{expires:new Date(Date.now()),httpOnly:true})
-//         .json({
-//             message:"Logout Successfully",
-//         })
-
-//     } catch (error) {
-//     res.status(500).json({success:false,message:error.message})
-
-//     }
-//   }
+const logout = (req, res) => {
+  try {
+    res
+      .status(200)
+      // .cookie("token", null, { expires: new Date(Date.now()), httpOnly: true })
+      .json({
+        message: "Logout Successfully",
+      });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 //   const getMyPosts = async (req, res) => {
 //       try {
@@ -135,30 +150,27 @@ function generateOTP() {
 //       }
 //     };
 
-// const Passwordchange =async(req,res)=>{
-//     try {
-//         let user = await User.findById(req.user._id).select("+password");
-//     const {oldpassword,newpassword} = req.body
-//     const ismatch =await user.matchpass(oldpassword);
-//     if(!ismatch){
-//         return res.status(401).json({
-//             success:false,
-//             message:"Old password Not Matched"
-//         })
-//     }
-
-//     user.password = newpassword;
-//     await user.save();
-//     res.status(200).json({
-//         success:true,
-//         message:"Password changed Successfully"
-//     })
-
-//     } catch (error) {
-//     res.status(500).json({success:false,message:error.message})
-
-//     }
-// }
+const Passwordchange = async (req, res) => {
+  try {
+    let user = await User.findById(req.user._id).select("+password");
+    const { oldpassword, newpassword } = req.body;
+    const ismatch = await user.matchpass(oldpassword);
+    if (!ismatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Old password Not Matched",
+      });
+    }
+    user.password = newpassword;
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "Password changed Successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 // const updateprofile = async(req,res) =>{
 //   try {
 //      let user = await User.findById(req.user._id);
@@ -332,10 +344,10 @@ function generateOTP() {
 module.exports = {
   register,
   //   allUser,
-  //   login,
+  login,
   //   followUser,
-  //   logout,
-  //   Passwordchange,
+  logout,
+  Passwordchange,
   //   updateprofile,
   //   deleteaccount,
   //   myprofile,

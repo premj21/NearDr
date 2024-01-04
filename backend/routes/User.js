@@ -2,12 +2,12 @@ const express = require("express");
 const {
   register,
   //   allUser,
-  //   login,
+  login,
   //   followUser,
   //   forgetpassword,
   //   resetpass,
   //   getMyPosts,
-  //   logout,
+  logout,
   //   Passwordchange,
   //   updateprofile,
   //   deleteaccount,
@@ -18,10 +18,10 @@ const {
 // const authentication = require("../middlewares/authentication");
 const router = express.Router();
 router.route("/register").post(register);
-// router.route("/login").post(login);
+router.route("/login").post(login);
 // router.route("/alluser").get(allUser);
 // router.route("/follow/:id").get(authentication, followUser);
-// router.route("/logout").get(logout);
+router.route("/logout").get(logout);
 // router.route("/update/password").put(authentication, Passwordchange);
 // router.route("/update/profile").put(authentication, updateprofile);
 // router.route("/delete/me").delete(authentication, deleteaccount);
