@@ -3,7 +3,7 @@ const cors = require("cors");
 const dbconnect = require("./config/dbconnect");
 require("dotenv").config({ path: "./config/config.env" });
 const cookieparser = require("cookie-parser");
-const User = require("./routes/User");
+const User = require("./routes/usr.js");
 const cloudinary = require("cloudinary");
 
 cloudinary.config({
