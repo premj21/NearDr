@@ -4,6 +4,7 @@ const dbconnect = require("./config/dbconnect");
 require("dotenv").config({ path: "./config/config.env" });
 const cookieparser = require("cookie-parser");
 const User = require("./routes/usr.js");
+const Mett = require("./routes/Mett.js");
 const cloudinary = require("cloudinary");
 
 cloudinary.config({
@@ -22,7 +23,7 @@ app.use(express.json({ limit: "500mb" }));
 app.use(express.urlencoded({ limit: "100mb", extended: true }));
 
 app.use("/api/v1/auth", User);
-// app.use('/api/post',Post);
+app.use("/api/v1/Req", Mett);
 const port = process.env.PRT;
 app.listen(port, () => {
   console.log(`surver is running on port ${port}`);

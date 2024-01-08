@@ -71,12 +71,26 @@ const UserSchema = new mongoose.Schema(
         },
       },
     ],
+
+    // location of the user
+
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+      },
+      coordinates: {
+        type: [Number],
+        default: [0, 0], // default longitude and latitude
+      },
+    },
   },
   {
     timestamps: true,
   }
 );
-
+UserSchema.index({ "location.coordinates": "2dsphere" });
 UserSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 10);
@@ -87,12 +101,9 @@ UserSchema.pre("save", async function (next) {
 UserSchema.methods.matchpass = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
-
 UserSchema.methods.gentoken = function () {
-  return jwt.sign({ _id: this._id }, process.env.SEC);
+  return jwt.sign({ _id: this._id, _role: this.role }, process.env.SEC);
 };
-
 const Doctor = mongoose.model("Doctor", UserSchema);
 const Patient = mongoose.model("Patient", UserSchema);
-
 module.exports = { Doctor, Patient };
