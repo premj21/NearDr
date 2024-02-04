@@ -3,11 +3,34 @@
   margin: 0;
   box-sizing: border-box;
   text-decoration: none;
-  /* font-family: 'Sirin Stencil', cursive; */
+  font-family: 'Encode Sans Semi Expanded', sans-serif;
 }
+
 body {
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 100vw;
+  height: auto;
+}
+
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+}
+
+.info {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: inline-block;
+  width: 120px;
+  font-weight: bold;
+}
+
+.value {
+  display: inline-block;
+  margin-left: 10px;
 }
 
 /* .cursor {
