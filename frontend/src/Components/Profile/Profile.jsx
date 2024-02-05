@@ -1,5 +1,10 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Avatar, Spacer } from "@chakra-ui/react";
+import { BiLeftArrowAlt } from "react-icons/bi";
+import { BsFillPersonFill, BsFillPersonPlusFill } from "react-icons/bs";
+import { FaCreditCard } from "react-icons/fa";
+import { FaShield } from "react-icons/fa6";
+import { IoMdNotifications } from "react-icons/io";
 
 const Profile = () => {
   return (
@@ -14,8 +19,92 @@ const Profile = () => {
         <Box
           h="100%"
           w="25%"
-          //  border={"1px solid black"}
-        ></Box>
+          //border={"1px solid black"}
+        >
+          <Box
+            //border={"1px solid green"}
+            mt={"10%"}
+            pl={"17%"}
+          >
+            <Spacer />
+            <BiLeftArrowAlt size={"40"} />
+            <Spacer />
+            <Text fontWeight={"400"} letterSpacing={"1px"} fontSize={"1.2rem"}>
+              Profile Settings
+            </Text>
+          </Box>
+          <Box
+            // border={"1px solid red"}
+            mt={"5%"}
+            pl={"17%"}
+            display={"flex"}
+            flexDir={"row"}
+            gap={"5%"}
+          >
+            <BsFillPersonFill size={"25 "} />
+            <Text letterSpacing={"1px"}>Manage Your</Text>
+          </Box>
+          <Spacer />
+          <Box
+            // border={"1px solid red"}
+            mt={"5%"}
+            pl={"17%"}
+            display={"flex"}
+            flexDir={"row"}
+            gap={"5%"}
+          >
+            <FaCreditCard size={"20"} />
+            <Text letterSpacing={"1px"}> Update Your Payment</Text>
+          </Box>
+          <Spacer />
+          <Box
+            // border={"1px solid red"}
+            mt={"5%"}
+            pl={"17%"}
+            display={"flex"}
+            flexDir={"row"}
+            gap={"5%"}
+          >
+            <FaShield size={"20"} />
+            <Text letterSpacing={"1px"}>Ensure</Text>
+          </Box>
+          <Spacer />
+          <Box
+            // border={"1px solid red"}
+            mt={"5%"}
+            pl={"17%"}
+            display={"flex"}
+            flexDir={"row"}
+            gap={"4%"}
+          >
+            <BsFillPersonPlusFill size={"25"} />
+            <Text letterSpacing={"1px"}>Set your</Text>
+          </Box>
+          <Spacer />
+          <Box
+            // border={"1px solid red"}
+            mt={"5%"}
+            pl={"17%"}
+            display={"flex"}
+            flexDir={"row"}
+            gap={"4%"}
+          >
+            <IoMdNotifications size={"25"} />
+            <Text letterSpacing={"1px"}>Stay up-to-</Text>
+          </Box>
+          <Spacer />
+          <Box
+            //border={"1px solid red"}
+            mt={"5%"}
+            pl={"17%"}
+            display={"flex"}
+            flexDir={"row"}
+            gap={"5%"}
+          >
+            <BsFillPersonFill size={"25"} />
+            <Text letterSpacing={"1px"}>Add family members to</Text>
+          </Box>
+        </Box>
         <Box
           w="75vw"
           h="100%"
@@ -45,9 +134,16 @@ const Profile = () => {
             </Text>
           </Box>
 
+          {/* user profile avatar  */}
+
+          <Avatar
+            size={"xl"}
+            src="https://images.unsplash.com/photo-1639747280804-dd2d6b3d88ac?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          />
+
           <Box
             w="40%"
-            border={"1px solid black"}
+            //border={"1px solid black"}
             h="fit-con"
             display={"flex"}
             flexDir={"column"}
@@ -135,6 +231,60 @@ const Profile = () => {
                 fontSize={"1rem"}
               >
                 premjadhav378@gmail.com
+              </Text>
+              <Text
+                fontWeight={"300"}
+                textAlign={"start"}
+                letterSpacing={"1px"}
+                fontSize={"1rem"}
+              >
+                Edit
+              </Text>
+            </Box>
+            <Box w="100%" display={"flex"} justifyContent={"space-between"}>
+              <Text
+                fontWeight={"600"}
+                textAlign={"start"}
+                letterSpacing={"1px"}
+                fontSize={"1rem"}
+              >
+                Nationality
+              </Text>
+
+              <Text
+                fontWeight={"300"}
+                textAlign={"start"}
+                letterSpacing={"1px"}
+                fontSize={"1rem"}
+              >
+                American
+              </Text>
+              <Text
+                fontWeight={"300"}
+                textAlign={"start"}
+                letterSpacing={"1px"}
+                fontSize={"1rem"}
+              >
+                Edit
+              </Text>
+            </Box>
+            <Box w="100%" display={"flex"} justifyContent={"space-between"}>
+              <Text
+                fontWeight={"600"}
+                textAlign={"start"}
+                letterSpacing={"1px"}
+                fontSize={"1rem"}
+              >
+                Date of Birth
+              </Text>
+
+              <Text
+                fontWeight={"300"}
+                textAlign={"start"}
+                letterSpacing={"1px"}
+                fontSize={"1rem"}
+              >
+                01/01/2000
               </Text>
               <Text
                 fontWeight={"300"}
