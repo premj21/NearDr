@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Home } from "./Components/Home/Home.jsx";
 import Footer from "./Components/Footer/Footer.jsx";
 import Profile from "./Components/Profile/Profile.jsx";
-
+import Search from "./Components/Search/Search.jsx";
 function App() {
   return (
     <>
@@ -13,7 +13,7 @@ function App() {
         <Box w="100vw">
           <Routes>
             <Route path="/" element={<Home></Home>} />
-            <Route path="/doctors" element={<h1>Doctors</h1>} />
+            <Route path="/doctors" element={<Search />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </Box>
